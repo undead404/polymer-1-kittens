@@ -1,0 +1,33 @@
+{
+  "cats": [
+    {
+      "age": 7,
+      "imgUrl":
+        "https://instagram.fdnk1-1.fna.fbcdn.net/vp/3bfe3d8defc7589e437d81182d338023/5B9C68A0/t51.2885-15/e35/26156877_2066842713548081_8859886300304506880_n.jpg",
+      "name": "Ursula"
+    },
+    {
+      "age": 1,
+      "imgUrl":
+        "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA5Ny85NTkvb3JpZ2luYWwvc2h1dHRlcnN0b2NrXzYzOTcxNjY1LmpwZw==",
+      "name": "Tiger"
+    },
+    {
+      "age": 3,
+      "imgUrl":
+        "https://static.pexels.com/photos/126407/pexels-photo-126407.jpeg",
+      "name": "Oscar"
+    },
+    {
+      "age": 3,
+      "imgUrl":
+        "https://www.cats.org.uk/uploads/images/featurebox_sidebar_kids/grief-and-loss.jpg",
+      "name": "Max"
+    },
+    {
+      "age": 8,
+      "imgUrl": "http://www.stockvault.net/data/2011/02/07/117500/thumb16.jpg",
+      "name": "Sam"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/star-rating/star-rating.html">
+<dom-module id="polymer-1-cat">
+    <template>
+        <style>
+            :host {
+                background: rgba(0, 0, 0, 0.05);
+                /* border-radius: 10px; */
+                box-shadow: inset 0 0 1px rgb(196, 196, 196);
+                display: flex;
+                flex-direction: column;
+                margin-left: 1vw;
+                margin-right: 1vw;
+                padding-left: 1vw;
+                padding-right: 1vw;
+            }
+
+            :host>* {
+                display: block;
+                flex-grow: 0;
+            }
+
+            :host.purring {
+                background-color: orange;
+            }
+
+            :host>img {
+                flex-grow: 1;
+                max-height: 70vh;
+                max-width: 100vw;
+                object-fit: contain;
+                opacity: 0.5;
+            }
+
+            :host.purring>img {
+                opacity: 1;
+            }
+        </style>
+        <h2 class="name">[[name]]</h2>
+        <img src$="[[imgUrl]]" />
+        <star-rating icon='heart' on-rate-changed="setRating" on-click="_stop"></star-rating>
+        <h4 class="age">[[age]] years</h4>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        ADULT_CAT_PURR_URL = 'http://ronsen.org/purrfectsounds/purrs/canolli.mp3'
+        KITTEN_PURR_URL = 'http://ronsen.org/purrfectsounds/purrs/max.mp3'
+        let Polymer1Cat = Polymer({
+            ready() {
+                let rate = localStorage.getItem(this.name);
+                if (rate) {
+                    this.$$("star-rating").rate = rate;
+                }
+            },
+            is: 'polymer-1-cat',
+            listeners: {
+                'click': 'purr',
+            },
+            properties: {
+                age: {
+                    type: Number,
+                    value: 0,
+                },
+                class: {
+                    reflectToAttribute: true,
+                        type: String,
+                        computed: '_getClass(isKitten, isPurring, age)',
+                },
+                imgUrl: {
+                    type: String,
+                    value: "https://cdn1.iconfinder.com/data/icons/misc-1/100/Untitled-2-15-512.png",
+                },
+                isKitten: {
+                    type: Boolean,
+                    computed: '_isKitten(age)',
+                },
+                isPurring: {
+                    type: Boolean,
+                    value: false,
+                },
+                name: {
+                    type: String,
+                    value: 'Kitten'
+                },
+                purrAudio: {
+                    type: Audio,
+                    computed: '_getPurrAudio(purrUrl)',
+                },
+                purrUrl: {
+                    type: String,
+                    computed: '_getPurrUrl(isKitten)',
+                },
+                toggles: {
+                    type: Boolean,
+                    value: true,
+                }
+            },
+            purr(event) {
+                if (this.isPurring) {
+                    this.purrAudio.pause();
+                    this.isPurring = false;
+                } else {
+                    this.purrAudio.play();
+                    this.isPurring = true;
+                }
+            },
+            _getClass(isKitten, isPurring, age) {
+                return 'text-center ' +
+                    (
+                        isPurring ?
+                        'purring' :
+                        ''
+                    )
+            },
+            _getPurrAudio(purrUrl) {
+                return new Audio(purrUrl);
+            },
+            _getPurrUrl(isKitten) {
+                return isKitten ? KITTEN_PURR_URL : ADULT_CAT_PURR_URL;
+            },
+            _isKitten(age) {
+                return age <= 1;
+            },
+            setRating(event) {
+                if (event.detail.value !== 0) {
+                    localStorage.setItem(this.name, event.detail.value)
+                }
+            },
+            _stop(event) {
+                event.stopPropagation();
+            }
+        });
+    </script>
+</dom-module>

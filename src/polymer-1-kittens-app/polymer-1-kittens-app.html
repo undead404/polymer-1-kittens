@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="./polymer-1-cat.html" />
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+
+<dom-module id="polymer-1-kittens-app">
+  <template>
+    <style include="granite-bootstrap">
+      :host {
+        display: flex;
+        flex-direction: column;
+        left: 0px;
+        max-height: 100vh;
+        position: absolute;
+        top: 0px;
+      }
+
+      section {
+        bottom: 0px;
+        display: flex;
+        left: 0px;
+        height: 88vh;
+        overflow-y: hidden;
+        top: 10vh;
+      }
+
+      header.jumbotron {
+        height: 10vh;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+      }
+
+      header>h1 {
+        font-size: 4vh;
+        left: 2vw;
+        position: fixed;
+        top: 2vh;
+      }
+    </style>
+    <header class="jumbotron">
+      <h1>Polymer 1.0 kittens!!!</h1>
+    </header>
+    <iron-ajax handle-as="json" id="request-cats" on-response="initCats" url="/assets/cats.json"></iron-ajax>
+    <section id="polymer-1-kittens">
+      <template is="dom-repeat" items="[[cats]]">
+        <polymer-1-cat age$="{{item.age}}" img-url$="{{item.imgUrl}}" name$="{{item.name}}"></polymer-1-cat>
+      </template>
+    </section>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    Polymer({
+      initCats(event) {
+        this.cats = event.detail.response.cats;
+      },
+      is: 'polymer-1-kittens-app',
+      properties: {
+        cats: {
+          type: Array,
+        }
+      },
+      ready() {
+        this.$["request-cats"].generateRequest();
+      }
+    });
+  </script>
+</dom-module>
