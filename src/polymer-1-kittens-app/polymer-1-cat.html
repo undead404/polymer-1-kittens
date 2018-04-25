@@ -5,14 +5,12 @@
         <style>
             :host {
                 background: rgba(0, 0, 0, 0.05);
-                /* border-radius: 10px; */
                 box-shadow: inset 0 0 1px rgb(196, 196, 196);
                 display: flex;
                 flex-direction: column;
-                margin-left: 1vw;
-                margin-right: 1vw;
-                padding-left: 1vw;
-                padding-right: 1vw;
+                height: 100%;
+                text-align: center;
+                width: 100vw;
             }
 
             :host>* {
@@ -26,7 +24,7 @@
 
             :host>img {
                 flex-grow: 1;
-                max-height: 70vh;
+                max-height: 65vh;
                 max-width: 100vw;
                 object-fit: contain;
                 opacity: 0.5;
@@ -65,11 +63,6 @@
                     type: Number,
                     value: 0,
                 },
-                class: {
-                    reflectToAttribute: true,
-                        type: String,
-                        computed: '_getClass(isKitten, isPurring, age)',
-                },
                 imgUrl: {
                     type: String,
                     value: "https://cdn1.iconfinder.com/data/icons/misc-1/100/Untitled-2-15-512.png",
@@ -94,27 +87,17 @@
                     type: String,
                     computed: '_getPurrUrl(isKitten)',
                 },
-                toggles: {
-                    type: Boolean,
-                    value: true,
-                }
             },
             purr(event) {
                 if (this.isPurring) {
                     this.purrAudio.pause();
                     this.isPurring = false;
+                    this.classList.remove('purring');
                 } else {
                     this.purrAudio.play();
                     this.isPurring = true;
+                    this.classList.add('purring');
                 }
-            },
-            _getClass(isKitten, isPurring, age) {
-                return 'text-center ' +
-                    (
-                        isPurring ?
-                        'purring' :
-                        ''
-                    )
             },
             _getPurrAudio(purrUrl) {
                 return new Audio(purrUrl);
